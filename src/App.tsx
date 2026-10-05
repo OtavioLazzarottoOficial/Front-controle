@@ -1,19 +1,38 @@
-import { Button } from "@/components/ui/button"
+import { TableList } from "./components/table"
+import { Button } from "./components/ui/button"
+import { Field } from "./components/ui/field"
+import { Input } from "./components/ui/input"
+import { Label } from "./components/ui/label"
+import { useQuery } from "@tanstack/react-query"
+import { fetchProducts } from "./hooks/useProducts"
+import { DialogDemo } from "./components/modal"
+
+//import type { ProductDTO } from "./dto/product-dto"
 
 export function App() {
+  const { data, isPending } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => fetchProducts(1),
+  })
+
+  if (isPending) {
+    return <span>Loading...</span>
+  }
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
+    <div className="flex w-6xl flex-col items-center pt-6">
+      <DialogDemo />
+      <h2>Pagina de Produtos</h2>
+      <div className="mt-10 h-16 items-center gap-6">
+        
       </div>
+
+      <div>
+        <TableList products={data} />
+      </div>
+      
+      
+      
     </div>
   )
 }
