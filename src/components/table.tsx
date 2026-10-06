@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { ProductDTO } from "@/dto/product-dto"
+import { DialogDemo } from "./modal"
 
 type Props = {
   products?: ProductDTO[]
@@ -27,7 +28,9 @@ export function TableList({ products }: Props) {
           <TableHead className="w-[100px]">Produto</TableHead>
           <TableHead>Descrição</TableHead>
           <TableHead>SKU</TableHead>
-          <TableHead className="text-right">Preço</TableHead>
+          <TableHead>Preço</TableHead>
+          <TableHead className="text-right">      <DialogDemo/>
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

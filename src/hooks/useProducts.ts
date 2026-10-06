@@ -6,3 +6,7 @@ export async function fetchProducts(page: number): Promise<ProductDTO[]> {
 
   return response.data
 }
+
+export async function insertProduct(product: ProductDTO): Promise<void> {
+  await api.post("product", product)
+}

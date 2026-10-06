@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -18,18 +20,24 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { Field, FieldGroup } from "./ui/field"
+import { Field } from "./ui/field"
 import { Label } from "./ui/label"
 import { Input } from "./ui/input"
 import { CategoryDTO } from "@/dto/category.dto"
 import { PlusIcon } from "lucide-react"
 import { ButtonGroup } from "./ui/button-group"
+import { useMutation } from "@tanstack/react-query"
+import { insertProduct } from "@/hooks/useProducts"
 
 type Props = {
   categories?: CategoryDTO[]
 }
 
 export function DialogDemo({ categories }: Props) {
+  const { mutate } = useMutation({
+    mutationFn: () => insertProduct(),
+  })
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -71,6 +79,26 @@ export function DialogDemo({ categories }: Props) {
         </Field>
 
         <Field orientation="horizontal" className="justify-between">
+          <Label htmlFor="status">Status</Label>
+
+          <Select>
+            <SelectTrigger className="w-full max-w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Status</SelectLabel>
+                <SelectItem value="ACTIVE">ACTIVE</SelectItem>
+
+                <SelectItem value="INACTIVE">INACTIVE</SelectItem>
+
+                <SelectItem value="OUT_OF_STOCK">OUT_OF_STOCK</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </Field>
+
+        <Field orientation="horizontal" className="justify-between">
           <Label htmlFor="description">Categoria</Label>
           {categories?.length === 0 ? (
             <>
@@ -106,12 +134,25 @@ export function DialogDemo({ categories }: Props) {
             </>
           )}
         </Field>
-        <div className="flex flex-col items-center gap-8">
+
+        <DialogFooter className="sm:justify-center">
           <ButtonGroup>
-            <Button className={"cursor-pointer"} variant="outline">Cancelar</Button>
-            <Button className={"cursor-pointer"} variant="outline">Cadastrar</Button>
+            <DialogClose
+              render={
+                <Button
+                  className={"cursor-pointer"}
+                  variant="outline"
+                  type="button"
+                >
+                  Cancelar
+                </Button>
+              }
+            />
+            <Button className={"cursor-pointer"} variant="outline">
+              Cadastrar
+            </Button>
           </ButtonGroup>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

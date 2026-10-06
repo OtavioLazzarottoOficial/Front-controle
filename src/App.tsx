@@ -25,7 +25,6 @@ export function App() {
     return <span>Loading...</span>
   }
 
-
   return (
     <div className="flex w-6xl flex-col items-center pt-6">
       <DialogDemo categories={categories} />
@@ -33,7 +32,11 @@ export function App() {
       <div className="mt-10 h-16 items-center gap-6"></div>
 
       <div>
-        <TableList products={data} />
+        {data && data.length > 0 ? (
+          <TableList products={data} />
+        ) : (
+          <span>Nenhum produto cadastrado</span>
+        )}
       </div>
     </div>
   )
