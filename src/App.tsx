@@ -25,6 +25,7 @@ export function App() {
     return <span>Loading...</span>
   }
 
+
   return (
     <div className="flex w-6xl flex-col items-center pt-6">
       <DialogDemo categories={categories} />

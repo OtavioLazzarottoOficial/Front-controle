@@ -22,53 +22,96 @@ import { Field, FieldGroup } from "./ui/field"
 import { Label } from "./ui/label"
 import { Input } from "./ui/input"
 import { CategoryDTO } from "@/dto/category.dto"
+import { PlusIcon } from "lucide-react"
+import { ButtonGroup } from "./ui/button-group"
 
 type Props = {
   categories?: CategoryDTO[]
 }
 
 export function DialogDemo({ categories }: Props) {
-  console.log(categories)
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Open</Button>
+      <DialogTrigger>
+        <Button variant="outline" size="icon">
+          <PlusIcon />
+        </Button>
       </DialogTrigger>
 
-      <DialogContent>
-        <Field orientation="horizontal">
+      <DialogContent showCloseButton={false}>
+        <DialogTitle>Cadastrar Produto</DialogTitle>
+        <Field orientation="horizontal" className="justify-between">
           <Label htmlFor="name">Nome</Label>
-          <Input id="name" placeholder="Informatica" required />
+          <Input
+            className="w-64"
+            id="name"
+            placeholder="Informatica"
+            required
+          />
         </Field>
 
-        <Field orientation="horizontal">
+        <Field orientation="horizontal" className="justify-between">
           <Label htmlFor="description">Descrição</Label>
-          <Input id="description" placeholder="Informatica" required />
+          <Input
+            className="w-64"
+            id="description"
+            placeholder="Informatica"
+            required
+          />
         </Field>
 
-        <Select categories={categories}>
-          <SelectTrigger className="w-full max-w-48">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Categorias</SelectLabel>
-              {categories?.map((item) => (
-                <SelectItem key={item.id} value={item.id}>
-                  {item.name}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        <Field orientation="horizontal">
+        <Field orientation="horizontal" className="justify-between">
           <Label htmlFor="price">Preço</Label>
-          <Input id="price" placeholder="Informatica" required />
+          <Input
+            className="w-64"
+            id="price"
+            placeholder="Informatica"
+            required
+          />
         </Field>
-        <Button variant="outline" className="cursor-pointer">
-          Cadastrar
-        </Button>
+
+        <Field orientation="horizontal" className="justify-between">
+          <Label htmlFor="description">Categoria</Label>
+          {categories?.length === 0 ? (
+            <>
+              <Select categories={categories}>
+                <SelectTrigger className="w-full max-w-48">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Categorias</SelectLabel>
+                    <SelectItem>Sem Categoria</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </>
+          ) : (
+            <>
+              <Select categories={categories}>
+                <SelectTrigger className="w-full max-w-48">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Categorias</SelectLabel>
+                    {categories?.map((item) => (
+                      <SelectItem key={item.id} value={item.name}>
+                        {item.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </>
+          )}
+        </Field>
+        <div className="flex flex-col items-center gap-8">
+          <ButtonGroup>
+            <Button className={"cursor-pointer"} variant="outline">Cancelar</Button>
+            <Button className={"cursor-pointer"} variant="outline">Cadastrar</Button>
+          </ButtonGroup>
+        </div>
       </DialogContent>
     </Dialog>
   )
