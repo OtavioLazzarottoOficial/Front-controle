@@ -29,15 +29,17 @@ export function TableList({ products }: Props) {
           <TableHead>Descrição</TableHead>
           <TableHead>SKU</TableHead>
           <TableHead>Preço</TableHead>
-          <TableHead className="text-right">      <DialogDemo/>
+          <TableHead className="text-right">
+            {" "}
+            <DialogDemo />
           </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {products.map((product) => (
           <TableRow key={product.id}>
-            <TableCell className="font-medium">{product.description}</TableCell>
-            <TableCell>{product.name}</TableCell>
+            <TableCell className="font-medium">{product.name}</TableCell>
+            <TableCell>{product.description}</TableCell>
             <TableCell>{product.sku}</TableCell>
             <TableCell className="text-right">{product.price}</TableCell>
           </TableRow>
